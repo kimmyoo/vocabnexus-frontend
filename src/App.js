@@ -8,6 +8,9 @@ import UserProfile from "./features/users/UserProfile";
 import AddNode from "./features/nodes/AddNode";
 import Lists from "./features/nodes/Lists";
 import Logout from "./features/auth/Logout";
+import Missing from "./component/Missing";
+import RequireAuth from "./component/RequireAuth";
+import NodeWithNexus from "./features/nodes/NodeWithNexus";
 
 
 function App() {
@@ -19,18 +22,20 @@ function App() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
-
         {/* protected */}
-        <Route path="user-dash" element={<UserDashLayout />} >
-          <Route index element={<UserProfile />} />
-
-          <Route path="nodes" >
-            <Route index element={<Lists />} />
-            <Route path="add" element={<AddNode />} />
+        <Route element={<RequireAuth />}>
+          <Route path="user-dash" element={<UserDashLayout />} >
+            <Route index element={<UserProfile />} />
+            <Route path="nodes" >
+              <Route index element={<Lists />} />
+              <Route path="detail/:id" element={<NodeWithNexus />} />
+              <Route path="add" element={<AddNode />} />
+            </Route>
+            <Route path="logout" element={<Logout />} />
           </Route>
-
         </Route>
-        <Route path="logout" element={<Logout />} />
+
+        <Route path="*" element={<Missing />} />
       </Route>
     </Routes>
   );
