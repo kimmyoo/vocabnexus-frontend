@@ -7,8 +7,8 @@ import { useNavigate, useLocation, Link } from 'react-router-dom'
 import QuickSearch from '../search/QuickSearch'
 
 const UserProfile = () => {
-    const navigate = useNavigate()
     const location = useLocation()
+    const navigate = useNavigate()
     const { auth } = useContext(AuthContext)
     const userId = auth.userId
     const axiosPrivate = useAxiosPrivate()
@@ -61,7 +61,7 @@ const UserProfile = () => {
             </div>
             <div className="container">
                 <div className="profile-left">
-                    <p><Link to="nodes">View All words</Link></p>
+                    <p><Link to={`nodes/${userId}`}>View All words</Link></p>
                     <p>more options...</p>
                 </div>
                 <div className="profile-center">
@@ -76,7 +76,7 @@ const UserProfile = () => {
                     <QuickSearch userId={userId} />
                 </div>
             </div>
-        </section>
+        </section >
     )
 }
 

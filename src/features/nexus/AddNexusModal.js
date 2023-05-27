@@ -63,9 +63,9 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
             const dataForSubmission = {}
             dataForSubmission.user = userId
             dataForSubmission.id = nodeId
-            dataForSubmission.word = formData.word
+            dataForSubmission.word = formData.word.toLowerCase().trim() // ensure words are all lowercase
             dataForSubmission.nexusType = formData.nexusType
-            dataForSubmission.explanation = formData.explanation ? formData.explanation : null
+            dataForSubmission.explanation = formData.explanation ? formData.explanation.trim() : null
 
             axiosPrivate.post('nexus/', dataForSubmission)
                 .then(response => {
@@ -87,17 +87,17 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
     const content = (
         <div className='modal addNexus'>
             <div>
-                <h4>search existing node</h4>
                 <div>
+                    <h4>1. Search</h4>
                     <input
-                        placeholder='search...'
+                        placeholder='search from existing nodes...'
                         type="text"
                         value={searchQuery}
                         onChange={(e) => {
                             setSearchQuery(e.target.value)
                         }}
                     />
-                    <div className='search-result'>matching entries:
+                    <div className='search-result'>returned entries:
                         {
                             searchResult && searchResult.map(node => {
                                 return <button
@@ -110,58 +110,59 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
                                     {node.word}
                                 </button>
                             })
-
                         }
                     </div>
                 </div>
                 <hr />
-                <h4>or create a new node with new word</h4>
+                <h4>2. or create a new node with a new word</h4>
                 <form>
                     <div className="node-nexus">
                         <div>
-                            {/* <div className="satelliteNexus"> */}
+                            <div className="satelliteNexus">
 
-                            <select
-                                name="nexusType"
-                                value={formData.type}
-                                onChange={handleNexusInputChange}
-                            >
-                                <option value="">Nexus Type</option>
-                                <option value="prefix">prefix</option>
-                                <option value="suffix">suffix</option>
-                                <option value="synonym">synonym</option>
-                                <option value="antonym">Antonym</option>
-                                <option value="verb-noun">Verb-Noun</option>
-                                <option value="etymology">Etymology</option>
-                                <option value="pronunciation">Pronunciation</option>
-                                <option value="other">Other</option>
-                            </select>
-                            <span className='errmsg'>{formData.errors.nexusType}</span>
-                            {/* </div> */}
-                            <textarea
-                                name="explanation"
-                                cols="15"
-                                rows="2"
-                                placeholder='detailed explanation'
-                                onChange={handleNexusInputChange}
-                            ></textarea>
-
+                                <select
+                                    name="nexusType"
+                                    value={formData.type}
+                                    onChange={handleNexusInputChange}
+                                >
+                                    <option value="">Nexus Type*</option>
+                                    <option value="prefix">prefix</option>
+                                    <option value="suffix">suffix</option>
+                                    <option value="synonym">synonym</option>
+                                    <option value="antonym">Antonym</option>
+                                    <option value="->adjective">adjective form</option>
+                                    <option value="->adverb">Adverb form</option>
+                                    <option value="->noun">Noun form</option>
+                                    <option value="->verb">Verb form</option>
+                                    <option value="etymology">Etymology</option>
+                                    <option value="pronunciation">Pronunciation</option>
+                                    <option value="spelling">Spelling</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                <span className='errmsg'>{formData.errors.nexusType}</span>
+                            </div>
                             <span className='errmsg'>{formData.errors.word}</span>
                         </div>
                     </div>
                     <div className="node-nexus">
-
-                        {/* <div className="satelliteNode outbound"> */}
-                        <p>
-                            <input
-                                name="word"
-                                type="text"
-                                value={formData.word}
-                                placeholder='word in node'
-                                onChange={handleNexusInputChange}
-                            /></p>
-                        {/* </div> */}
+                        <div className="satelliteNode outbound">
+                            <p>
+                                <input
+                                    name="word"
+                                    type="text"
+                                    value={formData.word}
+                                    placeholder='word in node*'
+                                    onChange={handleNexusInputChange}
+                                /></p>
+                        </div>
                     </div>
+                    <textarea
+                        name="explanation"
+                        cols="150"
+                        rows="2"
+                        placeholder='brief explanation'
+                        onChange={handleNexusInputChange}
+                    ></textarea>
                     <button className='float-right' onClick={handleSubmit}>Add</button>
                     <button onClick={closeNexusModal}>close</button>
                 </form>

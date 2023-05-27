@@ -50,13 +50,13 @@ const Login = () => {
 
         } catch (err) {
             if (!err?.response) {
-                setErrMsg("no server response")
+                setErrMsg("no server response, check networkd")
             } else if (err.response?.status === 400) {
                 setErrMsg('missing username or password')
             } else if (err.response?.status === 401) {
-                setErrMsg('unauthorized')
+                setErrMsg('wrong password or username')
             } else {
-                setErrMsg("login failed")
+                setErrMsg("Login failed")
             }
             errRef.current.focus()
         }

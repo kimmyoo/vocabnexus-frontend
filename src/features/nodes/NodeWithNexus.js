@@ -9,11 +9,13 @@ import Outbound from '../../component/Outbound'
 import InBound from '../../component/InBound'
 import AddDefinitionModal from './AddDefinitionModal'
 import AddNexusModal from '../nexus/AddNexusModal'
+import EditNodeModal from './EditNodeModal'
+
 
 const NodeWithNexus = () => {
     const { auth } = useContext(AuthContext)
-    const { id } = useParams()
     const userId = auth.userId
+    const { id } = useParams()
     const axiosPrivate = useAxiosPrivate()
     // state
     const [node, setNode] = useState({})
@@ -21,6 +23,7 @@ const NodeWithNexus = () => {
     const [showMeaning, setShowMeaning] = useState(false)
     const [isDefModalOpen, setIsDefModalOpen] = useState(false)
     const [isNexusModalOpen, setIsNexusModalOpen] = useState(false)
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false)
 
     useEffect(() => {
         // get node object detail and set node
@@ -46,7 +49,7 @@ const NodeWithNexus = () => {
         // setIsDefModalOpen(false)
         getNodeDetail()
         getAllNexusWithNodes()
-    }, [userId, id, axiosPrivate, isDefModalOpen, isNexusModalOpen])
+    }, [userId, id, axiosPrivate, isDefModalOpen, isNexusModalOpen, isEditModalOpen])
 
 
     const toggleDefinition = () => {
@@ -76,6 +79,15 @@ const NodeWithNexus = () => {
     }
 
 
+    const openEditModal = () => {
+        setShowMeaning(false)
+        setIsEditModalOpen(true)
+    }
+
+    const closeEditModal = () => {
+        setIsEditModalOpen(false)
+    }
+
     const content = (
         <div className='content-wrapper'>
             <div className="container">
@@ -91,6 +103,7 @@ const NodeWithNexus = () => {
                         toggleDefinition={toggleDefinition}
                         openDefModal={openDefModal}
                         openNexusModal={openNexusModal}
+                        openEditModal={openEditModal}
                     />
                     {/* definition div, can be toggled to be displayed or hidden */}
                     <div className={showMeaning ? 'show' : 'hidden'}>
@@ -111,6 +124,7 @@ const NodeWithNexus = () => {
                     {/* AddDefModal */}
                     {isDefModalOpen && <AddDefinitionModal userId={userId} nodeId={id} closeDefModal={closeDefModal} />}
                     {isNexusModalOpen && <AddNexusModal userId={userId} nodeId={id} closeNexusModal={closeNexusModal} />}
+                    {isEditModalOpen && <EditNodeModal userId={userId} nodeId={id} closeEditModal={closeEditModal} />}
                 </div>
 
                 {/* outbound nexus and nodes */}

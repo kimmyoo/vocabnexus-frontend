@@ -27,7 +27,7 @@ function App() {
           <Route path="user-dash" element={<UserDashLayout />} >
             <Route index element={<UserProfile />} />
             <Route path="nodes" >
-              <Route index element={<Lists />} />
+              <Route path=":userId/" element={<Lists />} />
               <Route path="detail/:id" element={<NodeWithNexus />} />
               <Route path="add" element={<AddNode />} />
             </Route>

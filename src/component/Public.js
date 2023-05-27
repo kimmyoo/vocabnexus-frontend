@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 
 const Public = () => {
     const content = (
-        <div className='content-wrapper'>
-            <h1>Vocab Nexus</h1>
+        <div className=''>
+            <h4>Vocab Nexus</h4>
             <div className="node">
                 <div className="top">
                     <button>toggle definition</button>

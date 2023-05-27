@@ -15,6 +15,7 @@ const AddNode = () => {
         user: auth.userId,
         errors: {}
     })
+    const [apiErrors, setApiErrors] = useState(null)
 
     const handleInputChange = (e) => {
         const { name, value } = e.target
@@ -33,6 +34,7 @@ const AddNode = () => {
 
 
     const handleSubmit = (e) => {
+        setApiErrors(null)
         e.preventDefault()
         const errors = nodeValidation(formData)
 
@@ -44,6 +46,11 @@ const AddNode = () => {
                 })
                 .catch(err => {
                     console.error(err)
+                    setApiErrors(err.response.data.message)
+                    setFormData({
+                        ...formData,
+                        errors: {}
+                    })
                 })
         } else {
             setFormData({
@@ -61,6 +68,7 @@ const AddNode = () => {
                 <form>
                     <label>Word in node</label>
                     <span className='errmsg'>{formData.errors.word}</span>
+                    <span className='errmsg'>{apiErrors}</span>
                     <input
                         type="text"
                         name="word"

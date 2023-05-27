@@ -4,7 +4,13 @@ import useAuth from '../hooks/useAuth'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
 
-const CenterNode = ({ node, toggleDefinition, openDefModal, openNexusModal }) => {
+const CenterNode = ({
+    node,
+    toggleDefinition,
+    openDefModal,
+    openNexusModal,
+    openEditModal
+}) => {
     const axiosPrivate = useAxiosPrivate()
     const { auth } = useAuth()
     const userId = auth.userId
@@ -51,7 +57,7 @@ const CenterNode = ({ node, toggleDefinition, openDefModal, openNexusModal }) =>
     return (
         <div className="node">
             <div className="top">
-                <button onClick={toggleDefinition}>toggle definition</button> <hr />
+                <button onClick={toggleDefinition}>toggle definition</button> <br />
                 <div>
                     <button onClick={toggleLiked}>{centerNode?.liked ? "💗" : "🤍"}</button>
                     <button onClick={toggleGrasped}>{centerNode?.grasped ? "😁" : "😵‍💫"}</button>
@@ -59,8 +65,9 @@ const CenterNode = ({ node, toggleDefinition, openDefModal, openNexusModal }) =>
             </div>
             <div className="middle">{node ? node.word : "VocabNexus 词汇链接 🔗"}</div>
             <div className="bottom">
-                <button onClick={openNexusModal}>Add Nexus</button><button>Edit Mode</button>
-                <hr />
+                <button onClick={openNexusModal}>Add Nexus</button>
+                <button onClick={openEditModal}>Edit Mode</button>
+                <br />
                 <button onClick={openDefModal}>Add Definition</button>
             </div>
         </div>

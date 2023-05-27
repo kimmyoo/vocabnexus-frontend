@@ -17,10 +17,10 @@ const defFormValidation = (formData) => {
 const nexusNodeValidation = (formData) => {
     const errors = {}
     if (!formData.word.trim()) {
-        errors.word = "node word required"
+        errors.word = "Word required"
     }
     if (!formData.nexusType) {
-        errors.nexusType = "nexus type is required"
+        errors.nexusType = "required"
     }
     return errors
 }
@@ -29,7 +29,7 @@ const nexusNodeValidation = (formData) => {
 const nodeValidation = (formData) => {
     const errors = {}
     if (!formData.word.trim()) {
-        errors.word = "node word required"
+        errors.word = "this field is required"
     }
     return errors
 }
