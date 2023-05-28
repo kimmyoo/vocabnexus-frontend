@@ -164,7 +164,7 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
                         onChange={handleNexusInputChange}
                     ></textarea>
                     <button className='float-right' onClick={handleSubmit}>Add</button>
-                    <button onClick={closeNexusModal}>close</button>
+                    <button type="button" onClick={closeNexusModal}>close</button>
                 </form>
             </div>
 

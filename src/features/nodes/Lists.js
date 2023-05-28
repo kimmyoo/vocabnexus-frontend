@@ -28,6 +28,7 @@ const Lists = () => {
             <h3>All Nodes List</h3>
             <p>
                 {
+                    // mapping each key to a link element and point link to corresponding div with id
                     Object.entries(allNodes).map(([key]) => {
                         return <a key={nanoid()} href={`#${key}`}>{key.toUpperCase()}&nbsp;&nbsp; </a>
                     })
@@ -35,7 +36,6 @@ const Lists = () => {
             </p>
             <hr />
             <div className='grid-container'>
-
                 {
                     Object.entries(allNodes).map(([key, groupedList]) => {
                         return (

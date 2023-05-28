@@ -14,6 +14,11 @@ button{
   border-style: none;
 }
 
+.warning{
+  background-color: #e95a3daf;
+  height: 15px;
+}
+
 a {
   text-decoration: none;
   font-weight: 500;
@@ -73,6 +78,7 @@ textarea{
   grid-auto-flow: column;
   grid-template-areas: "top middle bottom";
   box-shadow: 0 4px 50px rgb(22, 22, 22);
+  word-break: break-all;
 }
 
 .top{
@@ -119,6 +125,7 @@ textarea{
   display: flex;
   margin-bottom: 5px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.366);
+  word-break: break-all;
 }
 
 .satelliteNexus{
@@ -317,7 +324,7 @@ a:active {
   position: absolute;
   top: 0px;
   width: 100%;
-  min-height: 300px;
+  min-height: 200px;
   color: rgb(0, 0, 0);
   height: auto;
   border-radius: 10px;
@@ -440,7 +447,9 @@ input{
   padding: 10px;
 }
 
-
+.selected{
+  background-color: #dcf36a;
+}
 @media only screen and (max-width: 780px) {
   .grid-container{
     grid-template-columns: auto;

@@ -91,7 +91,7 @@ const AddDefinitionModal = ({ userId, nodeId, closeDefModal }) => {
                     onChange={handleInputChange}
                 >
                 </textarea>
-                <button onClick={closeDefModal}>close</button>
+                <button type="button" onClick={closeDefModal}>close</button>
                 <button className="float-right" onClick={handleSubmit}>Add</button>
             </form>
         </div>

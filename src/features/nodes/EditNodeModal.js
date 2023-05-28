@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
-import Meaning from '../../component/Meaning'
+import { nanoid } from 'nanoid'
 
 const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
     const axiosPrivate = useAxiosPrivate()
@@ -11,6 +11,8 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         meanings: []
     })
     const [outboundNexus, setOutboundNexus] = useState([])
+    const [selectedNexusId, setSelectedNexusId] = useState("")
+    const [showDeletePrompt, setShowDeletePrompt] = useState(false)
 
 
 
@@ -52,9 +54,10 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
     // Function to handle changes in the definition, partOfSpeech, and sentence fields
     const handleMeaningChange = (e, index) => {
         const { name, value } = e.target
+        // console.log(name, value)
         setNode(prevState => {
             const updatedMeanings = [...prevState.meanings];
-            updatedMeanings[index][name] = value.trim() ? value : null
+            updatedMeanings[index][name] = value ? value : ""
             return { ...prevState, meanings: updatedMeanings };
         });
     };
@@ -69,13 +72,37 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
             .catch(err => {
                 console.error(err.message)
             })
+    }
 
+
+    const handleDeleteNexus = (nexusId) => {
+        setShowDeletePrompt(true)
+        setSelectedNexusId(nexusId)
+    }
+
+    // confirm and delete nexus
+    const confirmNexusDeletion = () => {
+
+        axiosPrivate.delete(`nexus/${userId}/${node._id}/${selectedNexusId}`)
+            .then(response => {
+                console.log(response.data.message)
+                closeEditModal()
+            })
+            .catch(err => {
+                console.error(err.message)
+            })
+
+    }
+
+    const cancelNexusDeletion = () => {
+        setShowDeletePrompt(false)
+        setSelectedNexusId("")
     }
 
     const content = (
         <div className='modal editNode'>
             <form>
-                <h4>Edit word in node</h4>
+                <h4>Edit Mode</h4>
                 <input
                     type="text"
                     name="word"
@@ -83,29 +110,97 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                     onChange={handleWordChange}
                 />
                 <hr />
-                <h4>Edit Definitions</h4>
                 {
                     node.meanings?.map((meaning, index) => {
-                        return <Meaning
-                            handleMeaningChange={handleMeaningChange}
-                            meaning={meaning}
-                            index={index}
-                        />
+                        return (
+                            <div>
+                                <span>def. {index + 1}</span>
+                                <select
+                                    name="partOfSpeech"
+                                    value={meaning.partOfSpeech}
+                                    onChange={e => handleMeaningChange(e, index)}
+                                >
+                                    <option value="">Select</option>
+                                    <option value="verb">Verb</option>
+                                    <option value="noun">Noun</option>
+                                    <option value="adj.">Adjective</option>
+                                    <option value="adv.">Adverb</option>
+                                    <optgroup label="Word Affix">
+                                        <option value="prefix">prefix--</option>
+                                        <option value="base word">base</option>
+                                        <option value="suffix">--suffix</option>
+                                    </optgroup>
+                                    <option value="other">other</option>
+                                </select>
+
+                                <textarea
+                                    rows="2"
+                                    type="text"
+                                    name="definition"
+                                    value={meaning.definition}
+                                    onChange={e => handleMeaningChange(e, index)}
+                                    placeholder='definition of word. required.'
+                                />
+
+                                {
+                                    meaning.sentence &&
+                                    <>
+                                        <label>example sentence</label>
+                                        <textarea
+                                            rows="3"
+                                            type="text"
+                                            name="sentence"
+                                            value={meaning.sentence}
+                                            onChange={e => handleMeaningChange(e, index)}
+                                        />
+                                    </>
+                                }
+                            </div>
+                        )
                     })
                 }
 
                 {
-                    outboundNexus && outboundNexus.map(n => {
-                        return <p><button>X</button>----&gt;{n.word}</p>
+                    outboundNexus && outboundNexus.map((nexus, index) => {
+                        return <p
+                            className={nexus._id === selectedNexusId ? "selected" : ""}
+                            key={nanoid()}
+                        >
+                            <button
+                                type="button"
+                                className='warning'
+                                onClick={(e) => handleDeleteNexus(nexus._id)}
+                            >X
+                            </button>
+
+                            ----&gt;{nexus.word}
+                        </p>
                     })
+                }
+
+                {
+                    showDeletePrompt &&
+                    <span>
+                        delete highlighted nexus?
+                        <button
+                            type='button'
+                            onClick={confirmNexusDeletion}
+                        >Yes</button>
+                        <button
+                            type='button'
+                            onClick={cancelNexusDeletion}
+                        >No
+                        </button>
+                    </span>
                 }
                 <br />
                 <button
+                    type="submit"
                     className='float-right'
                     onClick={handleSubmit}
                 >Submit</button>
-                <button className='' onClick={closeEditModal}>close</button>
-                <button>Delete Node</button>
+                <button type="button" className='' onClick={closeEditModal}>close</button>
+                <button className='warning'>Delete Node</button>
             </form>
         </div>
     )

@@ -45,17 +45,19 @@ const UserProfile = () => {
                 <div className="profile-center">
                     <h3>ungrasped words</h3>
                     <ol>
-                        {userProfileData?.unGraspedList.map(node => {
+                        {userProfileData?.unGraspedList.slice(0, 8).map(node => {
                             return <li key={node._id}><Link to={`nodes/detail/${node._id}`}>{node.word}</Link></li>
                         })}
+                        <li>more...</li>
                     </ol>
                 </div>
                 <div className="profile-right">
                     <h3>Unconnected nodes</h3>
                     <ol>
-                        {userProfileData?.unconnctedList.map(node => {
+                        {userProfileData?.unconnctedList.slice(0, 8).map(node => {
                             return <li key={node._id}><Link to={`nodes/detail/${node._id}`}>{node.word}</Link></li>
                         })}
+                        <li>more...</li>
                     </ol>
                 </div>
             </div>
@@ -67,9 +69,10 @@ const UserProfile = () => {
                 <div className="profile-center">
                     <h3>Words liked</h3>
                     <ol>
-                        {userProfileData?.likedList.map(node => {
+                        {userProfileData?.likedList.slice(0, 8).map(node => {
                             return <li key={node._id}><Link to={`nodes/detail/${node._id}`}>{node.word}</Link></li>
                         })}
+                        <li>more...</li>
                     </ol>
                 </div>
                 <div className="profile-right">
