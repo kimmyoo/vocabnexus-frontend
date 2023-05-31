@@ -7,7 +7,6 @@ import UserDashLayout from "./component/UserDashLayout";
 import UserProfile from "./features/users/UserProfile";
 import AddNode from "./features/nodes/AddNode";
 import Lists from "./features/nodes/Lists";
-import Logout from "./features/auth/Logout";
 import Missing from "./component/Missing";
 import RequireAuth from "./component/RequireAuth";
 import NodeWithNexus from "./features/nodes/NodeWithNexus";
@@ -33,7 +32,6 @@ function App() {
                 <Route path="detail/:id" element={<NodeWithNexus />} />
                 <Route path="add" element={<AddNode />} />
               </Route>
-              <Route path="logout" element={<Logout />} />
             </Route>
           </Route>
 

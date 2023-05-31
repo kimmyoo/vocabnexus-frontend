@@ -5,6 +5,7 @@ import AuthContext from '../../context/AuthProvider'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import QuickSearch from '../search/QuickSearch'
+import useLogout from '../../hooks/useLogout'
 
 const UserProfile = () => {
     const location = useLocation()
@@ -13,7 +14,7 @@ const UserProfile = () => {
     const userId = auth.userId
     const axiosPrivate = useAxiosPrivate()
     const [userProfileData, setUserProfileData] = useState()
-
+    const logout = useLogout()
 
     useEffect(() => {
         const getUserProfile = async () => {
@@ -30,6 +31,11 @@ const UserProfile = () => {
         getUserProfile()
     }, [userId, axiosPrivate, navigate, location])
 
+    const signOut = async () => {
+        await logout()
+        navigate('/login')
+    }
+
 
     return (
         <section className='content-wrapper'>
@@ -40,6 +46,7 @@ const UserProfile = () => {
                     <p><span>Account Created: </span>{userProfileData?.user?.createdAt}</p>
                     <p><span>Words added:</span> {userProfileData?.numOfNodes}</p>
                     <p><span>Nexus established:</span> {userProfileData?.numOfNexus}</p>
+                    <button type='button' onClick={signOut}>Sign Out</button>
                 </div>
                 <div className="profile-center">
                     <h3>ungrasped words</h3>

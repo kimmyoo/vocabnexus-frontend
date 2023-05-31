@@ -292,7 +292,10 @@ a:active {
   color: rgb(11, 11, 10);
 }
 
-
+input[type="checkbox"]{
+  display: inline-block;
+  width: 20px;
+}
 
 
 .missing-background{
@@ -388,6 +391,7 @@ a:active {
   margin: 0 auto;
   width: 40vw;
 }
+
 
 .float-right{
   float: right;

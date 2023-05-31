@@ -102,7 +102,6 @@ const Login = () => {
                                     <p>
                                         <button>sign in</button>
                                         <button className='float-right'>Register</button>
-                                        <span className='float-right'>Need an account?</span>
                                     </p>
                                     <p
                                         ref={errRef}
