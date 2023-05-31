@@ -54,20 +54,22 @@ const AddDefinitionModal = ({ userId, nodeId, closeDefModal }) => {
     }
 
     const content = (
-
         <div className='modal addDef'>
             <h4>Add a new definition</h4>
             <form className='form'>
                 <label htmlFor="definition">Definition*:{formData.errors?.definition && <span className='errmsg'>{formData.errors.definition}</span>} </label>
                 <textarea
+                    id='definition'
                     name="definition"
                     rows="3"
                     onChange={handleInputChange}
                     ref={definitionInput}
                 >
                 </textarea>
-                <label>Part of Speech*: {formData.errors?.partOfSpeech && <span className='errmsg'>{formData.errors.partOfSpeech}</span>} </label>
+                <label htmlFor='partOfSpeech'>Part of Speech*: </label>
+                {formData.errors?.partOfSpeech && <span className='errmsg'>{formData.errors.partOfSpeech}</span>}
                 <select
+                    id='partOfSpeech'
                     name="partOfSpeech"
                     value={formData.partOfSpeech}
                     onChange={handleInputChange}
@@ -86,6 +88,7 @@ const AddDefinitionModal = ({ userId, nodeId, closeDefModal }) => {
                 </select>
                 <label htmlFor="sentence">Exmaple Sentence: </label>
                 <textarea
+                    id="sentence"
                     name="sentence"
                     rows="6"
                     onChange={handleInputChange}

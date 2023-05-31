@@ -13,7 +13,6 @@ const Login = () => {
     const navigate = useNavigate()
     const userRef = useRef()
     const errRef = useRef()
-
     const [user, setUser] = useState('')
     const [pwd, setPwd] = useState('')
     const [errMsg, setErrMsg] = useState('')
@@ -38,11 +37,11 @@ const Login = () => {
                     withCredentials: true,
                 }
             )
-            console.log(JSON.stringify(response?.data))
+            // console.log(JSON.stringify(response?.data))
             const accessToken = response?.data?.accessToken
             const userId = response?.data?.userId
             setAuth({ user, userId, pwd, accessToken })
-            // setUser('')
+            setUser('')
             setPwd('')
             setSuccess(true)
             navigate("/user-dash")
@@ -98,6 +97,7 @@ const Login = () => {
                                         }}
                                         value={pwd} // controlled input
                                         required
+                                        autoComplete='on'
                                     />
                                     <p>
                                         <button>sign in</button>

@@ -2,9 +2,11 @@ import React from 'react'
 import { useState, useEffect } from 'react'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { nanoid } from 'nanoid'
+import { useNavigate } from 'react-router-dom'
 
 const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
     const axiosPrivate = useAxiosPrivate()
+    const navigate = useNavigate()
     const user = userId
     const [node, setNode] = useState({
         word: "",
@@ -13,7 +15,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
     const [outboundNexus, setOutboundNexus] = useState([])
     const [selectedNexusId, setSelectedNexusId] = useState("")
     const [showDeletePrompt, setShowDeletePrompt] = useState(false)
-
+    const [showNodeDeletePrompt, setShowNodeDeletePromp] = useState(false)
 
 
     useEffect(() => {
@@ -74,7 +76,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
             })
     }
 
-
+    // nexus deletion handle, confirm and cancel functions.
     const handleDeleteNexus = (nexusId) => {
         setShowDeletePrompt(true)
         setSelectedNexusId(nexusId)
@@ -82,7 +84,6 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
 
     // confirm and delete nexus
     const confirmNexusDeletion = () => {
-
         axiosPrivate.delete(`nexus/${userId}/${node._id}/${selectedNexusId}`)
             .then(response => {
                 console.log(response.data.message)
@@ -91,13 +92,37 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
             .catch(err => {
                 console.error(err.message)
             })
-
     }
 
     const cancelNexusDeletion = () => {
         setShowDeletePrompt(false)
         setSelectedNexusId("")
     }
+
+
+    // node deletion handler, confirm, and cancel functions
+    const handleDeleteNode = () => {
+        setShowNodeDeletePromp(true)
+    }
+
+    const confirmNodeDeletion = () => {
+        axiosPrivate.delete(`nodes/detail/${userId}/${node._id}`)
+            .then(response => {
+                console.log(response.data.message)
+                closeEditModal()
+                navigate('/user-dash')
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    }
+
+    const cancelNodeDeletion = () => {
+        setShowDeletePrompt(false)
+        closeEditModal()
+    }
+
+
 
     const content = (
         <div className='modal editNode'>
@@ -113,7 +138,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                 {
                     node.meanings?.map((meaning, index) => {
                         return (
-                            <div>
+                            <div key={nanoid()}>
                                 <span>def. {index + 1}</span>
                                 <select
                                     name="partOfSpeech"
@@ -145,14 +170,16 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                                 {
                                     meaning.sentence &&
                                     <>
-                                        <label>example sentence</label>
+                                        <label for="sentence">example sentence</label>
                                         <textarea
+                                            id='sentence'
                                             rows="3"
                                             type="text"
                                             name="sentence"
                                             value={meaning.sentence}
                                             onChange={e => handleMeaningChange(e, index)}
                                         />
+
                                     </>
                                 }
                             </div>
@@ -177,7 +204,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                         </p>
                     })
                 }
-
+                {/* prompt to confirm nexus deletion */}
                 {
                     showDeletePrompt &&
                     <span>
@@ -193,6 +220,22 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                         </button>
                     </span>
                 }
+                {/* prompt to confirm node deletion */}
+                {
+                    showNodeDeletePrompt &&
+                    <span className='selected'>
+                        deleting this node will delete all nexus conencted to it, please confirm deletion.
+                        <button
+                            type='button'
+                            onClick={confirmNodeDeletion}
+                        >Yes</button>
+                        <button
+                            type='button'
+                            onClick={cancelNodeDeletion}
+                        >No
+                        </button>
+                    </span>
+                }
                 <br />
                 <button
                     type="submit"
@@ -200,7 +243,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                     onClick={handleSubmit}
                 >Submit</button>
                 <button type="button" className='' onClick={closeEditModal}>close</button>
-                <button className='warning'>Delete Node</button>
+                <button type="button" className='warning' onClick={handleDeleteNode}>Delete Node</button>
             </form>
         </div>
     )

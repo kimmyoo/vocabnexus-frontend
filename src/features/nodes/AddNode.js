@@ -66,11 +66,12 @@ const AddNode = () => {
             <div className='add-node'>
                 <h3>Add a word node</h3>
                 <form>
-                    <label>Word in node</label>
                     <span className='errmsg'>{formData.errors.word}</span>
                     <span className='errmsg'>{apiErrors}</span>
+                    <label htmlFor='word'>Word in Node</label>
                     <input
                         type="text"
+                        id='word'
                         name="word"
                         value={formData.word}
                         onChange={handleInputChange}

@@ -36,14 +36,17 @@ const QuickSearch = ({ userId }) => {
         <div>
             <h3>Quick Search</h3>
             <div>
-                <input
-                    placeholder='search...'
-                    type="text"
-                    value={searchQuery}
-                    onChange={(e) => {
-                        setSearchQuery(e.target.value)
-                    }}
-                />
+                <label htmlFor="search">
+                    <input
+                        id="search"
+                        placeholder='search...'
+                        type="text"
+                        value={searchQuery}
+                        onChange={(e) => {
+                            setSearchQuery(e.target.value)
+                        }}
+                    />
+                </label>
                 <div className='search-result'>matching entries:
                     {
                         searchResult && searchResult.map(node => {

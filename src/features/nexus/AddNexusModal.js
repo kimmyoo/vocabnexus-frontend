@@ -89,14 +89,17 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
             <div>
                 <div>
                     <h4>1. Search</h4>
-                    <input
-                        placeholder='search from existing nodes...'
-                        type="text"
-                        value={searchQuery}
-                        onChange={(e) => {
-                            setSearchQuery(e.target.value)
-                        }}
-                    />
+                    <label htmlFor="search">
+                        <input
+                            id="search"
+                            placeholder='search from existing nodes...'
+                            type="text"
+                            value={searchQuery}
+                            onChange={(e) => {
+                                setSearchQuery(e.target.value)
+                            }}
+                        />
+                    </label>
                     <div className='search-result'>returned entries:
                         {
                             searchResult && searchResult.map(node => {

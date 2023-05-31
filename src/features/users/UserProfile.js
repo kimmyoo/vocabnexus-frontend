@@ -33,7 +33,6 @@ const UserProfile = () => {
 
     return (
         <section className='content-wrapper'>
-
             <div className="container">
                 <div className="profile-left">
                     <p><span>User: </span>{userProfileData?.user?.username}</p>
