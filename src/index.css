@@ -456,17 +456,6 @@ input{
 }
 
 
-
-
-label,
-button {
-  margin-top: 1rem;
-}
-
-button {
-  padding: 0.5rem;
-}
-
 .instructions {
     font-size: 0.75rem;
     border-radius: 0.5rem;
