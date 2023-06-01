@@ -3,6 +3,7 @@ import { useRef, useState, useEffect, useContext } from 'react'
 import AuthContext from '../../context/AuthProvider'
 import axios from '../../api/axios'
 import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 const LOGIN_URL = '/auth'
 
 
@@ -87,6 +88,7 @@ const Login = () => {
                                             setUser(e.target.value)
                                         }}
                                         value={user} // controlled input
+                                        required
                                     /> <br />
                                     <label htmlFor="password">Password:</label>
                                     <input
@@ -101,7 +103,9 @@ const Login = () => {
                                     />
                                     <p>
                                         <button>sign in</button>
-                                        <button className='float-right'>Register</button>
+                                    </p>
+                                    <p>
+                                        <Link to="/register">Need an account? Register here</Link>
                                     </p>
                                     <p
                                         ref={errRef}

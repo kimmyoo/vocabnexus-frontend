@@ -10,8 +10,6 @@ export default axios.create(
 );
 
 
-
-
 export const axiosPrivate = axios.create({
     baseURL: BASE_URL,
     headers: {
