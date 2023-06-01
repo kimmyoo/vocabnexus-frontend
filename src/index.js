@@ -7,7 +7,7 @@ import { AuthProvider } from './context/AuthProvider';
 import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
 // for deployment to diable react devtools
-if (ProcessingInstruction.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   disableReactDevTools()
 }
 
