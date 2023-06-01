@@ -4,11 +4,11 @@ import './index.css';
 import App from './App';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './context/AuthProvider';
-import { disableReacDevTools } from '@fvilers/disable-react-devtools'
+import { disableReactDevTools } from '@fvilers/disable-react-devtools'
 
 // for deployment to diable react devtools
 if (ProcessingInstruction.env.NODE_ENV === 'production') {
-  disableReacDevTools()
+  disableReactDevTools()
 }
 
 
