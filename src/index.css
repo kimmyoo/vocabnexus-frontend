@@ -33,7 +33,8 @@ body{
   font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size:medium;
   opacity: .8;
-	background: linear-gradient(90deg, rgba(113, 207, 241, 0.556), #524a90);
+  background-color: #528ce4a4;
+	/* background: linear-gradient(-90deg, rgba(113, 207, 241, 0.556), #3577a0f9); */
 }
 
 
@@ -227,7 +228,7 @@ textarea{
   width: 100%;
   display: block;
   backdrop-filter: blur(1px);
-  /* background-color: #91cadd9b; */
+  background-color:  #4da5f8d9;
   /* background: linear-gradient(-90deg, rgba(79, 192, 234, 0.556), #524a90); */
   z-index: 1;
   height: 90px;
@@ -241,7 +242,7 @@ textarea{
   bottom: 0;
   width: 100%;
   backdrop-filter: blur(1px);
-  /* background-color: #91cadd9b; */
+  background-color:  #4da5f8d9;
   /* background: linear-gradient(90deg, rgba(79, 192, 234, 0.556), #524a90); */
   z-index: 1;
   height: 50px;
@@ -409,6 +410,7 @@ input[type="checkbox"]{
 .search-result{
   overflow: auto;
   height: 100px;
+  width: auto;
   border-radius: 10px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
@@ -497,14 +499,12 @@ input{
 
 
 
-
-
-
-
-
-
-
-
+.profile-grid-container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 10px;
+  grid-auto-flow: row;
+}
 
 
 
@@ -512,8 +512,15 @@ input{
   .grid-container{
     grid-template-columns: auto;
   }
+  .profile-grid-container{
+    grid-template-columns: auto;
+  }
+
+  .container{
+    grid-template-columns: auto;
+  }
   .nav-links a {
-    font-size:small;
+    font-size:medium;
   }
   .sign-in{
     margin: 0 auto;
@@ -521,7 +528,6 @@ input{
     height: 300px;
   }
 }
-
 
 
 

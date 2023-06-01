@@ -39,16 +39,24 @@ const UserProfile = () => {
 
     return (
         <section className='content-wrapper'>
-            <div className="container">
-                <div className="profile-left">
+            <div className="profile-grid-container">
+                <div className="grid-item">
                     <p><span>User: </span>{userProfileData?.user?.username}</p>
                     <p><span>Level: </span>{userProfileData?.user?.level}</p>
-                    <p><span>Account Created: </span>{userProfileData?.user?.createdAt}</p>
+                    <p><span>Account Created: </span>{userProfileData?.user?.createdAt.split("T")[0]}</p>
                     <p><span>Words added:</span> {userProfileData?.numOfNodes}</p>
                     <p><span>Nexus established:</span> {userProfileData?.numOfNexus}</p>
+                    <p><Link to={`nodes/${userId}`}>View All words</Link></p>
                     <button type='button' onClick={signOut}>Sign Out</button>
                 </div>
-                <div className="profile-center">
+                <div className="grid-item">
+                    <QuickSearch userId={userId} />
+                </div>
+
+
+            </div>
+            <div className="profile-grid-container">
+                <div className="grid-item">
                     <h3>ungrasped words</h3>
                     <ol>
                         {userProfileData?.unGraspedList.slice(0, 8).map(node => {
@@ -57,22 +65,7 @@ const UserProfile = () => {
                         <li>more...</li>
                     </ol>
                 </div>
-                <div className="profile-right">
-                    <h3>Unconnected nodes</h3>
-                    <ol>
-                        {userProfileData?.unconnctedList.slice(0, 8).map(node => {
-                            return <li key={node._id}><Link to={`nodes/detail/${node._id}`}>{node.word}</Link></li>
-                        })}
-                        <li>more...</li>
-                    </ol>
-                </div>
-            </div>
-            <div className="container">
-                <div className="profile-left">
-                    <p><Link to={`nodes/${userId}`}>View All words</Link></p>
-                    <p>more options...</p>
-                </div>
-                <div className="profile-center">
+                <div className="grid-item">
                     <h3>Words liked</h3>
                     <ol>
                         {userProfileData?.likedList.slice(0, 8).map(node => {
@@ -81,8 +74,16 @@ const UserProfile = () => {
                         <li>more...</li>
                     </ol>
                 </div>
-                <div className="profile-right">
-                    <QuickSearch userId={userId} />
+            </div>
+            <div className='profile-grid-container'>
+                <div className="grid-item">
+                    <h3>Unconnected nodes</h3>
+                    <ol>
+                        {userProfileData?.unconnctedList.slice(0, 8).map(node => {
+                            return <li key={node._id}><Link to={`nodes/detail/${node._id}`}>{node.word}</Link></li>
+                        })}
+                        <li>more...</li>
+                    </ol>
                 </div>
             </div>
         </section >
