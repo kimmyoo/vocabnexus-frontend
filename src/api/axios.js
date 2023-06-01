@@ -1,5 +1,7 @@
 import axios from 'axios'
-const BASE_URL = 'http://localhost:3500'
+// const BASE_URL = 'http://localhost:3500' // for development
+const BASE_URL = 'https://vocab-nexus.onrender.com/'  // for deployment
+
 
 export default axios.create(
     {
