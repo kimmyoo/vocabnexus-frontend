@@ -17,4 +17,3 @@ export const axiosPrivate = axios.create({
         withCredentials: true
     }
 });
-// then create a hook to useAxiosPrivate
