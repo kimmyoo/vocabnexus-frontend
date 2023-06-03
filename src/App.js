@@ -11,7 +11,7 @@ import Missing from "./component/Missing";
 import RequireAuth from "./component/RequireAuth";
 import NodeWithNexus from "./features/nodes/NodeWithNexus";
 import Register from "./features/auth/Register";
-import PersistLogin from "./component/PersistLogin";
+// import PersistLogin from "./component/PersistLogin";
 
 function App() {
 
@@ -26,20 +26,20 @@ function App() {
 
 
         {/* protected */}
-        <Route element={<PersistLogin />}>
+        {/* <Route element={<PersistLogin />}> */}
 
-          <Route element={<RequireAuth />}>
-            <Route path="user-dash" element={<UserDashLayout />} >
-              <Route index element={<UserProfile />} />
-              <Route path="nodes" >
-                <Route path=":userId/" element={<Lists />} />
-                <Route path="detail/:id" element={<NodeWithNexus />} />
-                <Route path="add" element={<AddNode />} />
-              </Route>
+        <Route element={<RequireAuth />}>
+          <Route path="user-dash" element={<UserDashLayout />} >
+            <Route index element={<UserProfile />} />
+            <Route path="nodes" >
+              <Route path=":userId/" element={<Lists />} />
+              <Route path="detail/:id" element={<NodeWithNexus />} />
+              <Route path="add" element={<AddNode />} />
             </Route>
           </Route>
-
         </Route>
+
+        {/* </Route> */}
 
         <Route path="*" element={<Missing />} />
       </Route>

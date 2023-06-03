@@ -4,7 +4,7 @@ import AuthContext from '../../context/AuthProvider'
 import axios from '../../api/axios'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-const LOGIN_URL = '/auth'
+const LOGIN_URL = '/user'
 
 
 
