@@ -9,16 +9,16 @@ const Public = () => {
                 <div className="top">
                     <button>toggle definition</button>
                     <div>
-                        <button>💗</button>
-                        <button >😁</button>
+                        <button type='button'>💗</button>
+                        <button type='button'>😁</button>
                     </div>
                 </div>
                 <div className="middle">VocabNexus词汇链接🔗</div>
                 <div className="bottom">
                     <Link to="/login"><button>Login</button></Link>
-                    <Link><button>Register</button></Link>
+                    <Link to="/register"><button>Register</button></Link>
                     <br />
-                    <Link><button>About</button></Link>
+                    <Link to="/about"><button>About</button></Link>
                 </div>
             </div>
         </div>
