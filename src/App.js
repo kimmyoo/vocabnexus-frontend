@@ -27,20 +27,20 @@ function App() {
         <Route path="about" element={<About />} />
 
         {/* protected */}
-        {/* <Route element={<PersistLogin />}> */}
+        <Route element={<PersistLogin />}>
 
-        <Route element={<RequireAuth />}>
-          <Route path="user-dash" element={<UserDashLayout />} >
-            <Route index element={<UserProfile />} />
-            <Route path="nodes" >
-              <Route path=":userId/" element={<Lists />} />
-              <Route path="detail/:id" element={<NodeWithNexus />} />
-              <Route path="add" element={<AddNode />} />
+          <Route element={<RequireAuth />}>
+            <Route path="user-dash" element={<UserDashLayout />} >
+              <Route index element={<UserProfile />} />
+              <Route path="nodes" >
+                <Route path=":userId/" element={<Lists />} />
+                <Route path="detail/:id" element={<NodeWithNexus />} />
+                <Route path="add" element={<AddNode />} />
+              </Route>
             </Route>
           </Route>
-        </Route>
 
-        {/* </Route> */}
+        </Route>
 
         <Route path="*" element={<Missing />} />
       </Route>
