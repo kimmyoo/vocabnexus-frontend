@@ -11,6 +11,7 @@ import Missing from "./component/Missing";
 import RequireAuth from "./component/RequireAuth";
 import NodeWithNexus from "./features/nodes/NodeWithNexus";
 import Register from "./features/auth/Register";
+import About from "./component/About";
 // import PersistLogin from "./component/PersistLogin";
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
         <Route index element={<Public />} />
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />
-
+        <Route path="about" element={<About />} />
 
         {/* protected */}
         {/* <Route element={<PersistLogin />}> */}

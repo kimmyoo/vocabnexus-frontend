@@ -134,7 +134,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
 
 
     const content = (
-        <div className='modal editNode'>
+        <div className='modal edit-node'>
             <form>
                 <h4>Edit Mode</h4>
                 <span className='errmsg'>{errors.word}</span>
@@ -234,9 +234,10 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                 }
                 {/* prompt to confirm node deletion */}
                 {
-                    showNodeDeletePrompt &&
-                    <span className='selected'>
-                        deleting this node will delete all nexus conencted to it, please confirm deletion.
+                    showNodeDeletePrompt && <div>
+                        <span className='selected'>
+                            deleting this node will delete all nexus conencted to it, please confirm deletion.
+                        </span>
                         <button
                             type='button'
                             onClick={confirmNodeDeletion}
@@ -246,7 +247,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                             onClick={cancelNodeDeletion}
                         >No
                         </button>
-                    </span>
+                    </div>
                 }
                 <br />
                 <button

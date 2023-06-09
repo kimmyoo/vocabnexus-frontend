@@ -92,7 +92,7 @@ const NodeWithNexus = () => {
         <div className='content-wrapper'>
             <div className="container">
                 {/* inbound nodes and nexus */}
-                <div className="left">
+                <div className="left grid-item">
                     <InBound nexusWithNodes={nexusWithNodes} />
                 </div>
 
