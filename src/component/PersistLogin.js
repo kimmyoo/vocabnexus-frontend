@@ -10,7 +10,6 @@ const PersistLogin = () => {
     const refresh = useRefreshToken()
     const { auth } = useAuth()
 
-
     useEffect(() => {
         let isMounted = true
         const verifyRefreshToken = async () => {
@@ -31,7 +30,6 @@ const PersistLogin = () => {
         }
     }, [auth.accessToken, refresh])
 
-
     const content = (
         <>
             {isLoading
@@ -40,7 +38,6 @@ const PersistLogin = () => {
             }
         </>
     )
-
 
     return (
         content
