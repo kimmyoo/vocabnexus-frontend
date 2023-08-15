@@ -19,7 +19,7 @@ const UserProfile = () => {
     useEffect(() => {
         const getUserProfile = async () => {
             try {
-                const response = await axiosPrivate.get(`/user/${userId}`)
+                const response = await axiosPrivate.get(`/user/`)
                 // console.log(response.data)
                 setUserProfileData(response.data)
 
@@ -36,7 +36,6 @@ const UserProfile = () => {
         navigate('/login')
     }
 
-
     return (
         <section className='content-wrapper'>
             <div className="profile-grid-container">
@@ -50,7 +49,7 @@ const UserProfile = () => {
                     <button type='button' onClick={signOut}>Sign Out</button>
                 </div>
                 <div className="grid-item">
-                    <QuickSearch userId={userId} />
+                    <QuickSearch />
                 </div>
 
 
