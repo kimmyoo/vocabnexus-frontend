@@ -11,7 +11,7 @@ const Lists = () => {
     const [allNodes, setAllNodes] = useState([])
 
     useEffect(() => {
-        axiosPrivate.get(`nodes/${userId}`)
+        axiosPrivate.get('/nodes/')
             .then(response => {
                 setAllNodes(response.data)
             })

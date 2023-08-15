@@ -6,10 +6,10 @@ import { useNavigate } from 'react-router-dom'
 import { nodeEditValidation } from '../../common/utility'
 import { canSubmit } from '../../common/utility'
 
-const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
+const EditNodeModal = ({ nodeId, closeEditModal }) => {
     const axiosPrivate = useAxiosPrivate()
     const navigate = useNavigate()
-    const user = userId
+    // const user = userId
     const [node, setNode] = useState({
         word: "",
         meanings: []
@@ -25,7 +25,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         // get node object detail and set node
         const getNodeDetail = async () => {
             try {
-                const response = await axiosPrivate.get(`/nodes/detail/${userId}/${nodeId}`)
+                const response = await axiosPrivate.get(`/nodes/detail/${nodeId}`)
                 setNode(response.data)
             } catch (err) {
                 console.error(err)
@@ -35,7 +35,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         // get all nenux
         const getOutboundNexus = async () => {
             try {
-                const response = await axiosPrivate.get(`/nexus/${userId}/${nodeId}`)
+                const response = await axiosPrivate.get(`/nexus/${nodeId}`)
                 setOutboundNexus(response?.data.outbound)
             } catch (err) {
                 console.error(err)
@@ -45,7 +45,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         getOutboundNexus()
         getNodeDetail()
 
-    }, [userId, nodeId, axiosPrivate])
+    }, [nodeId, axiosPrivate])
 
 
     const handleWordChange = (e) => {
@@ -71,7 +71,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         e.preventDefault()
         const errors = nodeEditValidation(node)
         if (canSubmit(errors)) {
-            axiosPrivate.patch('nodes/update', { node, user })
+            axiosPrivate.patch('nodes/update', { node })
                 .then(response => {
                     console.log(response.data.message)
                     closeEditModal()
@@ -93,7 +93,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
 
     // confirm and delete nexus
     const confirmNexusDeletion = () => {
-        axiosPrivate.delete(`nexus/${userId}/${node._id}/${selectedNexusId}`)
+        axiosPrivate.delete(`nexus/${node._id}/${selectedNexusId}`)
             .then(response => {
                 console.log(response.data.message)
                 closeEditModal()
@@ -115,7 +115,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
     }
 
     const confirmNodeDeletion = () => {
-        axiosPrivate.delete(`nodes/detail/${userId}/${node._id}`)
+        axiosPrivate.delete(`nodes/detail/${node._id}`)
             .then(response => {
                 console.log(response.data.message)
                 closeEditModal()

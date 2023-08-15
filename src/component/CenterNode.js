@@ -1,6 +1,5 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import useAuth from '../hooks/useAuth'
 import useAxiosPrivate from '../hooks/useAxiosPrivate'
 
 
@@ -12,8 +11,6 @@ const CenterNode = ({
     openEditModal
 }) => {
     const axiosPrivate = useAxiosPrivate()
-    const { auth } = useAuth()
-    const userId = auth.userId
     const [centerNode, setCenterNode] = useState(node)
 
     useEffect(() => {
@@ -25,7 +22,7 @@ const CenterNode = ({
         if (centerNode) {
             const liked = !centerNode.liked
             try {
-                await axiosPrivate.patch('nodes/word/liked', { id: centerNode._id, user: userId, liked: liked })
+                await axiosPrivate.patch('nodes/liked', { id: centerNode._id, liked: liked })
             } catch (err) {
                 console.error(err)
             }
@@ -41,7 +38,7 @@ const CenterNode = ({
         if (centerNode) {
             const grasped = !centerNode.grasped
             try {
-                await axiosPrivate.patch('nodes/word/grasped', { id: centerNode._id, user: userId, grasped: grasped })
+                await axiosPrivate.patch('nodes/grasped', { id: centerNode._id, grasped: grasped })
             } catch (err) {
                 console.error(err)
             }
