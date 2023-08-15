@@ -4,7 +4,7 @@ import { defFormValidation, canSubmit } from '../../common/utility'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 
 
-const AddDefinitionModal = ({ userId, nodeId, closeDefModal }) => {
+const AddDefinitionModal = ({ nodeId, closeDefModal }) => {
     const [formData, setFormData] = useState({
         partOfSpeech: "",
         definition: "",
@@ -34,7 +34,6 @@ const AddDefinitionModal = ({ userId, nodeId, closeDefModal }) => {
         if (canSubmit(errors)) {
             const dataForSubmission = {}
             dataForSubmission.id = nodeId
-            dataForSubmission.user = userId
             dataForSubmission.meaning = formData
             axiosPrivate.post('nodes/word/meaning', dataForSubmission)
                 .then(response => {

@@ -6,7 +6,7 @@ import { nexusNodeValidation } from '../../common/utility'
 import { canSubmit } from '../../common/utility'
 
 
-const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
+const AddNexusModal = ({ nodeId, closeNexusModal }) => {
     const axiosPrivate = useAxiosPrivate()
     const [searchQuery, setSearchQuery] = useState('')
     const [searchResult, setSearchResult] = useState([])
@@ -19,7 +19,7 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
 
     useEffect(() => {
         const searchWords = async () => {
-            axiosPrivate.post(`nodes/word/search?q=${searchQuery}`, { user: userId })
+            axiosPrivate.post(`nodes/word/search?q=${searchQuery}`)
                 .then(response => {
                     setSearchResult(response.data)
                 })
@@ -38,7 +38,7 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
 
         return () => clearTimeout(debouncedSearch)
 
-    }, [searchQuery, userId, axiosPrivate])
+    }, [searchQuery, axiosPrivate])
 
     const selectNodeFromRes = (node) => {
         setFormData({
@@ -61,7 +61,6 @@ const AddNexusModal = ({ nodeId, closeNexusModal, userId }) => {
         const errors = nexusNodeValidation(formData)
         if (canSubmit(errors)) {
             const dataForSubmission = {}
-            dataForSubmission.user = userId
             dataForSubmission.id = nodeId
             dataForSubmission.word = formData.word.toLowerCase().trim() // ensure words are all lowercase
             dataForSubmission.nexusType = formData.nexusType

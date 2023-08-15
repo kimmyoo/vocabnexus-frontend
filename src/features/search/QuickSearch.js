@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 
 
 
-const QuickSearch = ({ userId }) => {
+const QuickSearch = () => {
     const axiosPrivate = useAxiosPrivate()
     const [searchQuery, setSearchQuery] = useState('')
     const [searchResult, setSearchResult] = useState([])
@@ -14,7 +14,7 @@ const QuickSearch = ({ userId }) => {
 
     useEffect(() => {
         const searchWords = async () => {
-            axiosPrivate.post(`nodes/word/search?q=${searchQuery}`, { user: userId })
+            axiosPrivate.post(`nodes/word/search?q=${searchQuery}`)
                 .then(response => {
                     setSearchResult(response.data)
                 })
@@ -30,7 +30,7 @@ const QuickSearch = ({ userId }) => {
             }
         }, 500)
         return () => clearTimeout(debouncedSearch)
-    }, [searchQuery, userId, axiosPrivate])
+    }, [searchQuery, axiosPrivate])
 
     const content = (
         <div>

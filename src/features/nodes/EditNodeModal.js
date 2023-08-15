@@ -3,15 +3,18 @@ import { useState, useEffect } from 'react'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { nanoid } from 'nanoid'
 import { useNavigate } from 'react-router-dom'
+import { nodeEditValidation } from '../../common/utility'
+import { canSubmit } from '../../common/utility'
 
-const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
+const EditNodeModal = ({ nodeId, closeEditModal }) => {
     const axiosPrivate = useAxiosPrivate()
     const navigate = useNavigate()
-    const user = userId
+    // const user = userId
     const [node, setNode] = useState({
         word: "",
         meanings: []
     })
+    const [errors, setErrors] = useState({})
     const [outboundNexus, setOutboundNexus] = useState([])
     const [selectedNexusId, setSelectedNexusId] = useState("")
     const [showDeletePrompt, setShowDeletePrompt] = useState(false)
@@ -22,7 +25,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         // get node object detail and set node
         const getNodeDetail = async () => {
             try {
-                const response = await axiosPrivate.get(`/nodes/detail/${userId}/${nodeId}`)
+                const response = await axiosPrivate.get(`/nodes/detail/${nodeId}`)
                 setNode(response.data)
             } catch (err) {
                 console.error(err)
@@ -32,7 +35,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         // get all nenux
         const getOutboundNexus = async () => {
             try {
-                const response = await axiosPrivate.get(`/nexus/${userId}/${nodeId}`)
+                const response = await axiosPrivate.get(`/nexus/${nodeId}`)
                 setOutboundNexus(response?.data.outbound)
             } catch (err) {
                 console.error(err)
@@ -42,7 +45,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
         getOutboundNexus()
         getNodeDetail()
 
-    }, [userId, nodeId, axiosPrivate])
+    }, [nodeId, axiosPrivate])
 
 
     const handleWordChange = (e) => {
@@ -66,14 +69,20 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        axiosPrivate.patch('nodes/update', { node, user })
-            .then(response => {
-                console.log(response.data.message)
-                closeEditModal()
-            })
-            .catch(err => {
-                console.error(err.message)
-            })
+        const errors = nodeEditValidation(node)
+        if (canSubmit(errors)) {
+            axiosPrivate.patch('nodes/update', { node })
+                .then(response => {
+                    console.log(response.data.message)
+                    closeEditModal()
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+        } else {
+            setErrors(errors)
+        }
+
     }
 
     // nexus deletion handle, confirm and cancel functions.
@@ -84,7 +93,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
 
     // confirm and delete nexus
     const confirmNexusDeletion = () => {
-        axiosPrivate.delete(`nexus/${userId}/${node._id}/${selectedNexusId}`)
+        axiosPrivate.delete(`nexus/${node._id}/${selectedNexusId}`)
             .then(response => {
                 console.log(response.data.message)
                 closeEditModal()
@@ -106,7 +115,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
     }
 
     const confirmNodeDeletion = () => {
-        axiosPrivate.delete(`nodes/detail/${userId}/${node._id}`)
+        axiosPrivate.delete(`nodes/detail/${node._id}`)
             .then(response => {
                 console.log(response.data.message)
                 closeEditModal()
@@ -125,9 +134,10 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
 
 
     const content = (
-        <div className='modal editNode'>
+        <div className='modal edit-node'>
             <form>
                 <h4>Edit Mode</h4>
+                <span className='errmsg'>{errors.word}</span>
                 <input
                     type="text"
                     name="word"
@@ -135,10 +145,12 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                     onChange={handleWordChange}
                 />
                 <hr />
+                <span className='errmsg'>{errors.meanings}</span>
                 {
                     node.meanings?.map((meaning, index) => {
+                        const meaningKey = `meaning-${index}`;
                         return (
-                            <div key={nanoid()}>
+                            <div key={meaningKey}>
                                 <span>def. {index + 1}</span>
                                 <select
                                     name="partOfSpeech"
@@ -159,7 +171,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                                 </select>
 
                                 <textarea
-                                    rows="2"
+                                    rows="1"
                                     type="text"
                                     name="definition"
                                     value={meaning.definition}
@@ -170,10 +182,10 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                                 {
                                     meaning.sentence &&
                                     <>
-                                        <label for="sentence">example sentence</label>
+                                        <label htmlFor="sentence">example sentence</label>
                                         <textarea
                                             id='sentence'
-                                            rows="3"
+                                            rows="2"
                                             type="text"
                                             name="sentence"
                                             value={meaning.sentence}
@@ -222,9 +234,10 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                 }
                 {/* prompt to confirm node deletion */}
                 {
-                    showNodeDeletePrompt &&
-                    <span className='selected'>
-                        deleting this node will delete all nexus conencted to it, please confirm deletion.
+                    showNodeDeletePrompt && <div>
+                        <span className='selected'>
+                            deleting this node will delete all nexus conencted to it, please confirm deletion.
+                        </span>
                         <button
                             type='button'
                             onClick={confirmNodeDeletion}
@@ -234,7 +247,7 @@ const EditNodeModal = ({ nodeId, userId, closeEditModal }) => {
                             onClick={cancelNodeDeletion}
                         >No
                         </button>
-                    </span>
+                    </div>
                 }
                 <br />
                 <button

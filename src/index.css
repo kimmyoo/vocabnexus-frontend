@@ -4,19 +4,25 @@
 
 h1, h2, h4{
   text-align: center;
+  margin: 10px  auto;
 }
 
 
 button{
   height: 25px;
-  border-radius: 10px;
+  border-radius: 5px;
+  margin-right: 5px;
+  margin-left: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
   background-color:bisque;
+  cursor: pointer;
   border-style: none;
 }
 
 .warning{
   background-color: #e95a3daf;
-  height: 15px;
+  margin-left: 10px;
 }
 
 a {
@@ -65,8 +71,8 @@ textarea{
   border-radius: 50%;
   background: #f5ebd2d3;
   margin: 0 auto;
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
   word-wrap:  break-word;
   text-align: center;
   vertical-align: middle;
@@ -157,57 +163,54 @@ textarea{
   background:rgba(110, 198, 230, 0.29);
 }
 
-.container {  
+.container {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  /* grid-template-rows: 1fr 1fr 1fr; */
   gap: 0px 0px;
   padding-top: 20px;
-  grid-auto-flow: column;
+  /* grid-auto-flow: row; */
   grid-template-areas: "left center right";
   height: auto;
   margin: 0 auto;
-  /* border: solid; */
+  justify-content: space-evenly;
+  align-content: center;
 }
 
 .left {
+  grid-area: left;
   position: relative;
   align-items: center;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr;
   gap: 0px 0px;
-  grid-auto-flow: row;
-  grid-template-areas:". .";
-  grid-area: left;
   float: left;
-  /* border: solid; */
+  width: auto;
 }
 
 .center {
-  min-height: 550px;
-  position: relative;
-  align-items: center;
   grid-area: center;
-  display: block;
+  /* min-height: 550px; */
+  position: relative;
+  padding-top: 20px;
+  align-items: center;
   justify-content: center;
-  /* border: solid; */
+  width: auto;
+  z-index: 100;
 }
 
 .right {
+  grid-area: right;
   position: relative;
   align-items: center;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
-  grid-area: right;
-  /* border: solid; */
+  width: auto;
 }
 
 .hidden{
   visibility: hidden;
-  /* display: none; */
 }
 
 .show{
@@ -253,7 +256,9 @@ textarea{
 }
 
 .logo{
-  font-size:1.5rem;
+  color: #d9ff30;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size:1.2rem;
   margin-right: 50px;
   font-weight: 600;
 }
@@ -267,10 +272,10 @@ textarea{
   text-decoration: none;
   color:rgb(0, 0, 0);
   display: inline;
-  padding-left: 40px;
+  padding-left: 20px;
   margin-right: 10px;
-  font-size: large;
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif
+  font-size:large;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 ul{
@@ -336,11 +341,12 @@ input[type="checkbox"]{
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(27, 27, 27, 0.3);
+  z-index: 100;
 }
 
 
 .addDef{
-  background: rgba(255, 255, 255, 0.105);
+  background: rgba(95, 101, 103, 0.267);
 }
 
 .addDef textarea, select{
@@ -349,33 +355,31 @@ input[type="checkbox"]{
 
 
 .addNexus{
-  background: rgba(255, 255, 255, 0.105);
-  padding: 10px 10px;
+  background: rgba(95, 101, 103, 0.267);
+  padding: 0px 10px;
   backdrop-filter: blur(3px);
   height: auto;
-  justify-content: center;
-  align-items: center;
   margin: 0 auto;
 }
 
 .addNexus textarea, input{
-  background-color: #eeecf7db;
+  background-color: #ffffff;
 }
 
 .node-nexus input{
   width: 120px;
   border-style: none;
-  background-color: #eeecf7db;
+  background-color: white;
   text-align: center;
 }
 
 .editNode textarea, input{
-  background-color: #eeecf7db;
+  background-color: white;
 }
 
 .node-nexus select{
   width: 120px;
-  background: rgba(255, 255, 255, 0.074);
+  background: rgba(255, 255, 255, 0.985);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
@@ -451,6 +455,7 @@ input{
 
 .edit-node{
   padding: 10px;
+  background: rgba(95, 101, 103, 0.267);
 }
 
 .selected{
@@ -497,15 +502,12 @@ input{
 }
 
 
-
-
 .profile-grid-container{
   display: grid;
   grid-template-columns: 1fr 1fr;
   padding: 10px;
   grid-auto-flow: row;
 }
-
 
 
 @media only screen and (max-width: 780px) {
@@ -516,8 +518,12 @@ input{
     grid-template-columns: auto;
   }
 
-  .container{
-    grid-template-columns: auto;
+  .container {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    gap: 0px 0px;
+    grid-template-areas: "left" "center" "right";
+    height: auto;
   }
   .nav-links a {
     font-size:medium;
@@ -527,7 +533,14 @@ input{
     width: 80%;
     height: 300px;
   }
+  .add-node{
+    width: 100%;
+  }
+  .modal{
+    position: fixed;
+    top: 0px; 
+    left: 0px;
+  }
 }
-
 
 

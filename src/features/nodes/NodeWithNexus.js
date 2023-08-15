@@ -29,7 +29,7 @@ const NodeWithNexus = () => {
         // get node object detail and set node
         const getNodeDetail = async () => {
             try {
-                const response = await axiosPrivate.get(`/nodes/detail/${userId}/${id}`)
+                const response = await axiosPrivate.get(`/nodes/detail/${id}`)
                 setNode(response.data)
             } catch (err) {
                 console.error(err)
@@ -38,7 +38,7 @@ const NodeWithNexus = () => {
         // get all nenux
         const getAllNexusWithNodes = async () => {
             try {
-                const response = await axiosPrivate.get(`/nexus/${userId}/${id}`)
+                const response = await axiosPrivate.get(`/nexus/${id}`)
                 setNexusWithNodes(response.data)
             } catch (err) {
                 console.error(err)
@@ -92,7 +92,7 @@ const NodeWithNexus = () => {
         <div className='content-wrapper'>
             <div className="container">
                 {/* inbound nodes and nexus */}
-                <div className="left">
+                <div className="left grid-item">
                     <InBound nexusWithNodes={nexusWithNodes} />
                 </div>
 
@@ -122,9 +122,9 @@ const NodeWithNexus = () => {
                         }
                     </div>
                     {/* AddDefModal */}
-                    {isDefModalOpen && <AddDefinitionModal userId={userId} nodeId={id} closeDefModal={closeDefModal} />}
-                    {isNexusModalOpen && <AddNexusModal userId={userId} nodeId={id} closeNexusModal={closeNexusModal} />}
-                    {isEditModalOpen && <EditNodeModal userId={userId} nodeId={id} closeEditModal={closeEditModal} />}
+                    {isDefModalOpen && <AddDefinitionModal nodeId={id} closeDefModal={closeDefModal} />}
+                    {isNexusModalOpen && <AddNexusModal nodeId={id} closeNexusModal={closeNexusModal} />}
+                    {isEditModalOpen && <EditNodeModal nodeId={id} closeEditModal={closeEditModal} />}
                 </div>
 
                 {/* outbound nexus and nodes */}
