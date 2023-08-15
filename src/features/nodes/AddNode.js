@@ -1,6 +1,5 @@
 import React from 'react'
-import { useState, useContext } from 'react'
-import AuthContext from '../../context/AuthProvider'
+import { useState } from 'react'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { canSubmit } from '../../common/utility'
 import { nodeWordValidation } from '../../common/utility'
@@ -8,11 +7,9 @@ import { useNavigate } from 'react-router-dom'
 
 const AddNode = () => {
     const navigate = useNavigate()
-    const { auth } = useContext(AuthContext)
     const axiosPrivate = useAxiosPrivate()
     const [formData, setFormData] = useState({
         word: "",
-        user: auth.userId,
         errors: {}
     })
     const [apiErrors, setApiErrors] = useState(null)
