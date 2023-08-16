@@ -4,9 +4,7 @@ import AuthContext from '../../context/AuthProvider'
 import axios from '../../api/axios'
 import { useNavigate } from 'react-router-dom'
 import { Link } from 'react-router-dom'
-const LOGIN_URL = '/user'
-
-
+const LOGIN_URL = '/auth'
 
 const Login = () => {
     // once it authenticated, use setAuth to set state in context provider
