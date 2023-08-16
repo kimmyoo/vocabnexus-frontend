@@ -1,6 +1,5 @@
-import React from 'react'
 import { Outlet } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import useRefreshToken from "../hooks/useRefreshToken"
 import useAuth from "../hooks/useAuth"
 
@@ -9,26 +8,33 @@ const PersistLogin = () => {
     const [isLoading, setIsLoading] = useState(true)
     const refresh = useRefreshToken()
     const { auth } = useAuth()
+    const effectRan = useRef(false)
 
     useEffect(() => {
-        let isMounted = true
-        const verifyRefreshToken = async () => {
-            try {
-                await refresh()
+        if (effectRan.current === false) {
+            const verifyRefreshToken = async () => {
+                // console.log("executed here")
+                try {
+                    await refresh()
+                }
+                catch (err) {
+                    console.log(err)
+                }
+                finally {
+                    setIsLoading(false)
+                }
             }
-            catch (err) {
-                console.log(err)
-            }
-            finally {
-                isMounted && setIsLoading(false)
-            }
-        }
-        !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false)
+            // only when there is no accessToken
+            // only to check the refreshToken when it needs to
+            !auth?.accessToken ? verifyRefreshToken() : setIsLoading(false)
 
-        return () => {
-            isMounted = false
+            return () => {
+                // set effectRan.current to true so the second useEffect won't run in dev mode
+                effectRan.current = true
+            }
         }
-    }, [auth.accessToken, refresh])
+
+    }, [auth.accessToken, isLoading, refresh])
 
     const content = (
         <>

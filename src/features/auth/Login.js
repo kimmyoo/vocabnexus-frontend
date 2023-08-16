@@ -1,14 +1,13 @@
 import React from 'react'
-import { useRef, useState, useEffect, useContext } from 'react'
-import AuthContext from '../../context/AuthProvider'
+import { useRef, useState, useEffect } from 'react'
+import useAuth from '../../hooks/useAuth'
 import axios from '../../api/axios'
-import { useNavigate } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 const LOGIN_URL = '/auth'
 
 const Login = () => {
     // once it authenticated, use setAuth to set state in context provider
-    const { setAuth } = useContext(AuthContext)
+    const { setAuth } = useAuth()
     const navigate = useNavigate()
     const userRef = useRef()
     const errRef = useRef()
@@ -44,8 +43,6 @@ const Login = () => {
             setPwd('')
             setSuccess(true)
             navigate("/user-dash")
-
-
         } catch (err) {
             if (!err?.response) {
                 setErrMsg("no server response, check networkd")

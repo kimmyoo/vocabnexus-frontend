@@ -1,7 +1,8 @@
 import React from 'react'
-import { useState, useEffect, useContext } from 'react'
+import { useState, useEffect } from 'react'
 // import axios from '../../api/axios'
-import AuthContext from '../../context/AuthProvider'
+// import AuthContext from '../../context/AuthProvider'
+import useAuth from '../../hooks/useAuth'
 import useAxiosPrivate from '../../hooks/useAxiosPrivate'
 import { useNavigate, useLocation, Link } from 'react-router-dom'
 import QuickSearch from '../search/QuickSearch'
@@ -10,25 +11,33 @@ import useLogout from '../../hooks/useLogout'
 const UserProfile = () => {
     const location = useLocation()
     const navigate = useNavigate()
-    const { auth } = useContext(AuthContext)
+    const { auth } = useAuth()
     const userId = auth.userId
     const axiosPrivate = useAxiosPrivate()
     const [userProfileData, setUserProfileData] = useState()
     const logout = useLogout()
 
     useEffect(() => {
+        let isMounted = true
+        const controller = new AbortController()
+
         const getUserProfile = async () => {
             try {
-                const response = await axiosPrivate.get(`/user/`)
+                const response = await axiosPrivate.get(`/user/`, {
+                    signal: controller.signal
+                })
                 // console.log(response.data)
-                setUserProfileData(response.data)
-
+                isMounted && setUserProfileData(response.data)
             } catch (err) {
                 console.error(err)
                 navigate('/login', { state: { from: location }, replace: true })
             }
         }
         getUserProfile()
+        // return () => {
+        //     isMounted = false
+        //     controller.abort()
+        // }
     }, [userId, axiosPrivate, navigate, location])
 
     const signOut = async () => {

@@ -9,7 +9,7 @@ const useRefreshToken = () => {
             // this allows us to send cookie with request
             withCredentials: true
         })
-
+        // console.log(response.data)
         setAuth(prev => {
             // console.log(JSON.stringify(prev))
             // console.log(response.data.accessToken)

@@ -17,3 +17,6 @@ export const axiosPrivate = axios.create({
         withCredentials: true
     }
 });
+
+// axiosPrivate will be used in useAxiosPrivate hook so refresh token can be used
+// to verify authentication status 
