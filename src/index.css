@@ -509,6 +509,20 @@ input{
   grid-auto-flow: row;
 }
 
+.about{
+  background-color: rgba(255, 255, 255, 0.635);
+  padding: 10px;
+  border-radius: 5px;
+  margin: 0 20px 0 20px;
+}
+
+.instruction img{
+  max-width: 50%;
+  max-height: 280px;
+  display: block;
+  margin: 0 auto;
+}
+
 
 @media only screen and (max-width: 780px) {
   .grid-container{
@@ -540,6 +554,10 @@ input{
     position: fixed;
     top: 0px; 
     left: 0px;
+  }
+
+  .instruction img{
+    max-width: 100%;
   }
 }
 
