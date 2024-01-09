@@ -9,7 +9,7 @@ const InBound = ({ nexusWithNodes }) => {
         inbounds?.length > 0 ?
             <div>
                 {inbounds.map(inbound => {
-                    return <div key={nanoid()}>
+                    return <div className='nodeNexusWrapper' key={nanoid()}>
                         <SatNode inbound={inbound} />
                         <SatNexus nexus={inbound} />
                     </div>

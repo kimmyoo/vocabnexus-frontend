@@ -64,7 +64,6 @@ const CenterNode = ({
             <div className="bottom">
                 <button onClick={openNexusModal}>Add Nexus</button>
                 <button onClick={openEditModal}>Edit Mode</button>
-                <br />
                 <button onClick={openDefModal}>Add Definition</button>
             </div>
         </div>

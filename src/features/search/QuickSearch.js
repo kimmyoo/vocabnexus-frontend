@@ -35,7 +35,7 @@ const QuickSearch = () => {
     const content = (
         <div>
             <h3>Quick Search</h3>
-            <div>
+            <div className='search-wrapper'>
                 <label htmlFor="search">
                     <input
                         id="search"
@@ -47,7 +47,8 @@ const QuickSearch = () => {
                         }}
                     />
                 </label>
-                <div className='search-result'>matching entries:
+                <div className='search-result'>
+                    <p>matching entries:</p>
                     {
                         searchResult && searchResult.map(node => {
                             return <button
