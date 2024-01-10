@@ -82,8 +82,8 @@ const UserProfile = () => {
                         <li>more...</li>
                     </ol>
                 </div>
-            </div>
-            <div className='profile-grid-container'>
+                {/* </div> */}
+                {/* <div className='profile-grid-container'> */}
                 <div className="grid-item">
                     <h3>Unconnected nodes</h3>
                     <ol>
