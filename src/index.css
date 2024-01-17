@@ -54,7 +54,6 @@ a:active {
 
 ol li {
   list-style-type:none;
-  color: #d9f719bb;
   padding: 2px 2px 2px 0;
 }
 
@@ -196,10 +195,9 @@ textarea{
   white-space: nowrap;
 }
 
-.public-wrapper{
+.public-wrapper, .about-wrapper{
   display: flex;
   flex-flow: column nowrap;
-  gap: 5rem;
   align-items: center;
   justify-content: center;
   align-content: center;
@@ -480,6 +478,13 @@ textarea{
   margin: 0 auto;
 }
 
+.errorsWrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
 .errmsg{
   color:#f95523;
 }
@@ -541,6 +546,10 @@ textarea{
     margin-right: 0.25rem;
 }
 
+.instructions ol{
+  color: black;
+}
+
 .offscreen {
     position: absolute;
     left: -9999px;
@@ -565,15 +574,30 @@ textarea{
 }
 
 .about{
+  width: 95vw;
   background-color: rgba(255, 255, 255, 0.635);
-  padding: 10px;
+  padding: .5rem;
   border-radius: 5px;
-  margin: 0 20px 0 20px;
+  /* background-color: blue; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.about p{
+  /* background-color: red; */
+  position: relative;
+  margin: 1rem;
+  text-align: justify;
+  text-justify: inter-word
 }
 
 .instruction img{
-  max-width: 50%;
-  max-height: 280px;
+  position: relative;;
+  max-width: 90vw;
+  max-height: 250px;
+  overflow: hidden;
+  /* max-height: 280px; */
   display: block;
   margin: 0 auto;
 }
@@ -624,6 +648,21 @@ textarea{
 
   .sign-in{
     width: 50%; 
+  }
+
+
+  /* about component */
+
+  .about{
+    width: 80vw;
+    padding: 1rem;
+  }
+
+  .instruction img{
+    max-width: 70vw;
+    max-height: 380px;
+    display: block;
+    margin: 0 auto;
   }
 
 }

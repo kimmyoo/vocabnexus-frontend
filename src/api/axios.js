@@ -10,6 +10,8 @@ export default axios.create(
 );
 
 
+// axiosPrivate will be used in useAxiosPrivate hook so refresh token can be used
+// to verify authentication status
 export const axiosPrivate = axios.create({
     baseURL: BASE_URL,
     headers: {
@@ -17,6 +19,3 @@ export const axiosPrivate = axios.create({
         withCredentials: true
     }
 });
-
-// axiosPrivate will be used in useAxiosPrivate hook so refresh token can be used
-// to verify authentication status 

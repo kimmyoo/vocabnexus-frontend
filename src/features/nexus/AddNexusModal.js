@@ -141,9 +141,7 @@ const AddNexusModal = ({ nodeId, closeNexusModal }) => {
                                     <option value="spelling">Spelling</option>
                                     <option value="other">Other</option>
                                 </select>
-                                <span className='errmsg'>{formData.errors.nexusType}</span>
                             </div>
-                            <span className='errmsg'>{formData.errors.word}</span>
                         </div>
                     </div>
                     <div className="node-nexus">
@@ -155,8 +153,13 @@ const AddNexusModal = ({ nodeId, closeNexusModal }) => {
                                     value={formData.word}
                                     placeholder='word in node*'
                                     onChange={handleNexusInputChange}
-                                /></p>
+                                />
+                            </p>
                         </div>
+                    </div>
+                    <div className='errorsWrapper'>
+                        <span className='errmsg'>{formData.errors.nexusType}</span>
+                        <span className='errmsg'>{formData.errors.word}</span>
                     </div>
                     <textarea
                         name="explanation"
