@@ -10,6 +10,9 @@ import InBound from '../../component/InBound'
 import AddDefinitionModal from './AddDefinitionModal'
 import AddNexusModal from '../nexus/AddNexusModal'
 import EditNodeModal from './EditNodeModal'
+// added webster api for accurate definitions
+import { DICT_API_URL } from '../../api/websterApiBaseURL'
+import axios from '../../api/axios'
 
 
 const NodeWithNexus = () => {
@@ -24,8 +27,10 @@ const NodeWithNexus = () => {
     const [isDefModalOpen, setIsDefModalOpen] = useState(false)
     const [isNexusModalOpen, setIsNexusModalOpen] = useState(false)
     const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+    const [shortDefs, setShortDefs] = useState([])
 
     useEffect(() => {
+        setShowMeaning(false)
         // get node object detail and set node
         const getNodeDetail = async () => {
             try {
@@ -52,8 +57,23 @@ const NodeWithNexus = () => {
     }, [userId, id, axiosPrivate, isDefModalOpen, isNexusModalOpen, isEditModalOpen])
 
 
+    // get json from webster dicionary api
+    const getWebsterWordDetail = async () => {
+        let endpoint = DICT_API_URL
+        // replace ? with "word?"
+        endpoint = endpoint.replace('?', `${node.word}` + '?')
+        const response = await axios.get(endpoint)
+            .then(response => {
+                if (response.data[0]?.shortdef?.length > 0) {
+                    setShortDefs(response.data[0]?.shortdef)
+                }
+            })
+            .catch(err => console.log(err))
+    }
+
     const toggleDefinition = () => {
         setShowMeaning(!showMeaning)
+        getWebsterWordDetail()
     }
 
 
@@ -65,6 +85,7 @@ const NodeWithNexus = () => {
 
     const closeDefModal = () => {
         setIsDefModalOpen(false)
+        setShortDefs([])
     }
 
 
@@ -117,7 +138,23 @@ const NodeWithNexus = () => {
                                 </p>
                             })
                             : <p>
-                                No definition added yet
+                                No customized definition added yet
+                            </p>
+                        }
+                    </div>
+                    {/* webster api data displayer here */}
+                    <div className={showMeaning ? 'show' : 'hidden'}>
+                        <h3>Webster Definitions:</h3>
+                        {shortDefs?.length !== 0 ?
+                            shortDefs?.map(def => {
+                                return <p key={nanoid()}>
+                                    <span key={nanoid()}>
+                                        Def. {shortDefs.indexOf(def) + 1}:<br />
+                                    </span>{def}. <br />
+                                </p>
+                            })
+                            : <p>
+                                No short definition available, check spellling of the word.
                             </p>
                         }
                     </div>
